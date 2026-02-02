@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>CARFIN — Evaluation Request (WhatsApp)</title>
+  <link rel="stylesheet" href="./valuation.css"/>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <div class="logo">CARFIN</div>
+        <div class="tag">Vehicle Evaluation • WhatsApp Submit</div>
+      </div>
+      <a class="btn gold" href="./index.html">Home</a>
+    </header>
+
+    <main class="card">
+      <h1>Vehicle Evaluation Request</h1>
+      <p class="sub">Fill details → sign → select photos → send on WhatsApp.</p>
+
+      <form id="valuationForm">
+        <h2>Customer</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Full Name *</label>
+            <input name="name" required placeholder="Customer name"/>
+          </div>
+          <div class="field">
+            <label>Phone (WhatsApp) *</label>
+            <input name="phone" required placeholder="+971..."/>
+          </div>
+          <div class="field">
+            <label>Email (optional)</label>
+            <input name="email" type="email" placeholder="Optional"/>
+          </div>
+          <div class="field">
+            <label>Location *</label>
+            <input name="location" required placeholder="Ajman / Dubai / Sharjah"/>
+          </div>
+        </div>
+
+        <hr class="sep"/>
+
+        <h2>Vehicle</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Make *</label>
+            <input name="make" required placeholder="Toyota"/>
+          </div>
+          <div class="field">
+            <label>Model *</label>
+            <input name="model" required placeholder="Land Cruiser"/>
+          </div>
+          <div class="field">
+            <label>Year *</label>
+            <input name="year" required inputmode="numeric" placeholder="2020"/>
+          </div>
+          <div class="field">
+            <label>Trim (optional)</label>
+            <input name="trim" placeholder="VXR / SXT..."/>
+          </div>
+          <div class="field">
+            <label>VIN / Chassis (optional)</label>
+            <input name="vin" placeholder="JTM..."/>
+          </div>
+          <div class="field">
+            <label>Mileage (km) *</label>
+            <input name="mileage" required inputmode="numeric" placeholder="85000"/>
+          </div>
+          <div class="field">
+            <label>Condition *</label>
+            <select name="condition" required>
+              <option value="">Select</option>
+              <option>Excellent</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+              <option>Accident / Repair</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Expected Price (AED) (optional)</label>
+            <input name="price" inputmode="numeric" placeholder="Optional"/>
+          </div>
+          <div class="field wide">
+            <label>Notes (accident / repaint / modifications)</label>
+            <textarea name="notes" rows="4" placeholder="Write details..."></textarea>
+          </div>
+        </div>
+
+        <hr class="sep"/>
+
+        <h2>Photos</h2>
+        <p class="help">Select photos now. After WhatsApp opens, attach the same photos and send.</p>
+        <div class="field">
+          <input id="photos" type="file" accept="image/*" multiple />
+        </div>
+        <div id="preview" class="preview"></div>
+
+        <hr class="sep"/>
+
+        <h2>Signature *</h2>
+        <p class="help">Customer signs below. Then send to WhatsApp.</p>
+        <div class="sigWrap">
+          <canvas id="signaturePad" width="900" height="220"></canvas>
+        </div>
+        <input type="hidden" id="signatureBase64" />
+        <div class="sigBtns">
+          <button type="button" class="btn outline" id="clearSig">Clear</button>
+          <button type="button" class="btn outline" id="undoSig">Undo</button>
+        </div>
+
+        <label class="check">
+          <input type="checkbox" id="agree" required/>
+          I confirm the above details are correct and authorize evaluation.
+        </label>
+
+        <div class="actions">
+          <button class="btn gold" type="submit">Send to WhatsApp</button>
+          <div class="tiny">
+            WhatsApp will open with message. Then attach photos manually and send.
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <footer class="foot">© CARFIN</footer>
+  </div>
+
+  <script src="./valuation.js"></script>
+</body>
+</html>
