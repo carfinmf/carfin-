@@ -1,134 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>CARFIN — Evaluation Request (WhatsApp)</title>
-  <link rel="stylesheet" href="./valuation.css"/>
+<meta charset="UTF-8">
+<title>Car Valuation Request</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#FFD700}
+.wrap{max-width:600px;margin:auto;padding:20px}
+h1{text-align:center}
+input,select,textarea{width:100%;padding:10px;margin:8px 0;border-radius:5px;border:none}
+button{background:gold;color:black;padding:14px;border:none;width:100%;font-size:18px;border-radius:8px;cursor:pointer}
+canvas{border:1px solid gold;width:100%;height:150px}
+label{font-size:14px}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
-      <div>
-        <div class="logo">CARFIN</div>
-        <div class="tag">Vehicle Evaluation • WhatsApp Submit</div>
-      </div>
-      <a class="btn gold" href="./index.html">Home</a>
-    </header>
 
-    <main class="card">
-      <h1>Vehicle Evaluation Request</h1>
-      <p class="sub">Fill details → sign → select photos → send on WhatsApp.</p>
+<div class="wrap">
+<h1>Vehicle Valuation</h1>
 
-      <form id="valuationForm">
-        <h2>Customer</h2>
-        <div class="grid">
-          <div class="field">
-            <label>Full Name *</label>
-            <input name="name" required placeholder="Customer name"/>
-          </div>
-          <div class="field">
-            <label>Phone (WhatsApp) *</label>
-            <input name="phone" required placeholder="+971..."/>
-          </div>
-          <div class="field">
-            <label>Email (optional)</label>
-            <input name="email" type="email" placeholder="Optional"/>
-          </div>
-          <div class="field">
-            <label>Location *</label>
-            <input name="location" required placeholder="Ajman / Dubai / Sharjah"/>
-          </div>
-        </div>
+<label>Name</label>
+<input id="name" placeholder="Your name">
 
-        <hr class="sep"/>
+<label>Phone</label>
+<input id="phone" placeholder="Your phone">
 
-        <h2>Vehicle</h2>
-        <div class="grid">
-          <div class="field">
-            <label>Make *</label>
-            <input name="make" required placeholder="Toyota"/>
-          </div>
-          <div class="field">
-            <label>Model *</label>
-            <input name="model" required placeholder="Land Cruiser"/>
-          </div>
-          <div class="field">
-            <label>Year *</label>
-            <input name="year" required inputmode="numeric" placeholder="2020"/>
-          </div>
-          <div class="field">
-            <label>Trim (optional)</label>
-            <input name="trim" placeholder="VXR / SXT..."/>
-          </div>
-          <div class="field">
-            <label>VIN / Chassis (optional)</label>
-            <input name="vin" placeholder="JTM..."/>
-          </div>
-          <div class="field">
-            <label>Mileage (km) *</label>
-            <input name="mileage" required inputmode="numeric" placeholder="85000"/>
-          </div>
-          <div class="field">
-            <label>Condition *</label>
-            <select name="condition" required>
-              <option value="">Select</option>
-              <option>Excellent</option>
-              <option>Good</option>
-              <option>Fair</option>
-              <option>Poor</option>
-              <option>Accident / Repair</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Expected Price (AED) (optional)</label>
-            <input name="price" inputmode="numeric" placeholder="Optional"/>
-          </div>
-          <div class="field wide">
-            <label>Notes (accident / repaint / modifications)</label>
-            <textarea name="notes" rows="4" placeholder="Write details..."></textarea>
-          </div>
-        </div>
+<label>Email (optional)</label>
+<input id="email" placeholder="Your email">
 
-        <hr class="sep"/>
+<label>Car Brand</label>
+<input id="brand" placeholder="Toyota, Nissan...">
 
-        <h2>Photos</h2>
-        <p class="help">Select photos now. After WhatsApp opens, attach the same photos and send.</p>
-        <div class="field">
-          <input id="photos" type="file" accept="image/*" multiple />
-        </div>
-        <div id="preview" class="preview"></div>
+<label>Model</label>
+<input id="model" placeholder="Land Cruiser">
 
-        <hr class="sep"/>
+<label>Year</label>
+<input id="year" placeholder="2020">
 
-        <h2>Signature *</h2>
-        <p class="help">Customer signs below. Then send to WhatsApp.</p>
-        <div class="sigWrap">
-          <canvas id="signaturePad" width="900" height="220"></canvas>
-        </div>
-        <input type="hidden" id="signatureBase64" />
-        <div class="sigBtns">
-          <button type="button" class="btn outline" id="clearSig">Clear</button>
-          <button type="button" class="btn outline" id="undoSig">Undo</button>
-        </div>
+<label>Mileage (km)</label>
+<input id="mileage" placeholder="100000">
 
-        <label class="check">
-          <input type="checkbox" id="agree" required/>
-          I confirm the above details are correct and authorize evaluation.
-        </label>
+<label>Condition</label>
+<select id="condition">
+<option>Excellent</option>
+<option>Good</option>
+<option>Average</option>
+<option>Poor</option>
+</select>
 
-        <div class="actions">
-          <button class="btn gold" type="submit">Send to WhatsApp</button>
-          <div class="tiny">
-            WhatsApp will open with message. Then attach photos manually and send.
-          </div>
-        </div>
-      </form>
-    </main>
+<label>Notes</label>
+<textarea id="notes" placeholder="Any accident, finance, issues..."></textarea>
 
-    <footer class="foot">© CARFIN</footer>
-  </div>
+<label>Signature</label>
+<canvas id="sign"></canvas>
+<button onclick="clearSign()">Clear Signature</button>
 
-  <script src="./valuation.js"></script>
+<br><br>
+<button onclick="sendWhatsApp()">Send to WhatsApp</button>
+</div>
+
+<script>
+let canvas = document.getElementById("sign");
+let ctx = canvas.getContext("2d");
+let drawing=false;
+
+canvas.addEventListener("mousedown",()=>drawing=true);
+canvas.addEventListener("mouseup",()=>drawing=false);
+canvas.addEventListener("mousemove",draw);
+
+canvas.addEventListener("touchstart",()=>drawing=true);
+canvas.addEventListener("touchend",()=>drawing=false);
+canvas.addEventListener("touchmove",drawTouch);
+
+function draw(e){
+if(!drawing)return;
+ctx.lineWidth=2;
+ctx.lineTo(e.offsetX,e.offsetY);
+ctx.stroke();
+}
+
+function drawTouch(e){
+let rect = canvas.getBoundingClientRect();
+let touch = e.touches[0];
+ctx.lineTo(touch.clientX-rect.left,touch.clientY-rect.top);
+ctx.stroke();
+}
+
+function clearSign(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function sendWhatsApp(){
+let msg =
+"🚗 *Car Valuation Request* \n\n"+
+"Name: "+name.value+"\n"+
+"Phone: "+phone.value+"\n"+
+"Email: "+email.value+"\n"+
+"Brand: "+brand.value+"\n"+
+"Model: "+model.value+"\n"+
+"Year: "+year.value+"\n"+
+"Mileage: "+mileage.value+"\n"+
+"Condition: "+condition.value+"\n"+
+"Notes: "+notes.value+"\n\n"+
+"📸 Please attach car photos";
+
+let url="https://wa.me/971544417665?text="+encodeURIComponent(msg);
+window.open(url,"_blank");
+}
+</script>
+
 </body>
 </html>
