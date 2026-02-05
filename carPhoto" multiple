@@ -1,1 +1,11 @@
-
+<label>Vehicle Photos (required)</label>
+<input 
+  type="file" 
+  id="photos" 
+  accept="image/*" 
+  multiple 
+  required
+/>
+<p style="color:#aaa;font-size:13px;">
+After clicking “Send to WhatsApp”, please attach these photos in WhatsApp.
+</p>
