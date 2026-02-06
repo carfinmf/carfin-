@@ -50,7 +50,11 @@ label{font-size:14px}
 
 <label>Notes</label>
 <textarea id="notes" placeholder="Any accident, finance, issues..."></textarea>
-
+<label>Vehicle Photos</label>
+<input type="file" id="photos" multiple accept="image/*">
+<small style="color:#aaa;display:block;margin-top:6px;">
+After tapping “Send to WhatsApp”, please attach photos using the 📎 button in WhatsApp.
+</small>
 
 <br><br>
 <button onclick="sendWhatsApp()">Send to WhatsApp</button>
