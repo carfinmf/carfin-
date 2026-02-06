@@ -55,7 +55,34 @@ label{font-size:14px}
 <small style="color:#aaa;display:block;margin-top:6px;">
 After tapping “Send to WhatsApp”, please attach photos using the 📎 button in WhatsApp.
 </small>
+<h3 style="color:#f5d76e;margin-top:24px;">Required Photos</h3>
 
+<label>Front View</label>
+<input type="file" id="photo_front" accept="image/*" capture="environment">
+
+<label>Rear View</label>
+<input type="file" id="photo_rear" accept="image/*" capture="environment">
+
+<label>Left Side</label>
+<input type="file" id="photo_left" accept="image/*" capture="environment">
+
+<label>Right Side</label>
+<input type="file" id="photo_right" accept="image/*" capture="environment">
+
+<label>Odometer (KM)</label>
+<input type="file" id="photo_odometer" accept="image/*" capture="environment">
+
+<label>VIN / Chassis Plate</label>
+<input type="file" id="photo_vin" accept="image/*" capture="environment">
+
+<label>Engine Bay</label>
+<input type="file" id="photo_engine" accept="image/*" capture="environment">
+
+<label>Interior</label>
+<input type="file" id="photo_interior" accept="image/*" capture="environment">
+
+<label>Car Document (Mulkiya / Export / etc.)</label>
+<input type="file" id="photo_doc" accept="image/*,.pdf">
 <br><br>
 <button onclick="sendWhatsApp()">Send to WhatsApp</button>
 </div>
