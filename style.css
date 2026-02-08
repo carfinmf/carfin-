@@ -1,20 +1,96 @@
-body { margin:0; font-family: Arial, sans-serif; background:#000; color:#fff; }
-.top { padding:90px 20px; text-align:center; background:linear-gradient(180deg,#000,#0b0b0b); }
-.brand { color:gold; letter-spacing:3px; font-size:52px; margin:0; }
-.tag { color:#bbb; margin:12px 0 0; font-size:18px; }
-.btns { margin-top:28px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
-.btn { padding:12px 22px; border-radius:10px; text-decoration:none; font-weight:bold; }
-.btn.gold { background:gold; color:#000; }
-.btn.outline { border:1px solid gold; color:gold; }
+.section-title { max-width: 1100px; margin: 40px auto 16px; padding: 0 20px; }
+.section-title h2 { color: #f3c600; margin: 0; font-size: 28px; }
+.section-title p { color: #aaa; margin: 6px 0 0; }
 
-.section { padding:60px 20px; max-width:1100px; margin:auto; }
-.h2 { font-size:26px; margin:0 0 18px; color:gold; }
-.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
-.card { border:1px solid #222; border-radius:14px; padding:18px; background:#0a0a0a; }
-.card h3 { margin:0 0 8px; color:#fff; }
-.card p { margin:0; color:#aaa; font-size:14px; }
+.cars-grid{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
 
-.cars .car { border:1px solid #222; border-radius:14px; padding:14px; background:#0a0a0a; text-align:left; }
-.badge { display:inline-block; padding:6px 10px; border:1px solid gold; border-radius:999px; color:gold; font-size:12px; }
+.car-card{
+  background: #0c0c0c;
+  border: 1px solid #222;
+  border-radius: 14px;
+  overflow: hidden;
+}
 
-.footer { padding:30px 20px; border-top:1px solid #222; text-align:center; color:#777; }
+.car-img{
+  height: 170px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.badge{
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  background: #f3c600;
+  color: #000;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.car-body{ padding: 14px; }
+.car-body h3{ color:#fff; font-size: 16px; margin: 0 0 8px; }
+
+.car-meta{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.car-price{
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #f3c600;
+}
+
+.car-actions{
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn{
+  display: inline-block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex: 1;
+}
+
+.btn.primary{ background:#f3c600; color:#000; }
+.btn.outline{ border:1px solid #f3c600; color:#f3c600; }
+
+.banks{ padding-bottom: 60px; }
+.bank-row{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 12px 20px 0;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.bank-row img{
+  height: 34px;
+  opacity: 0.9;
+  filter: grayscale(100%);
+}
+.bank-row img:hover{
+  filter: grayscale(0%);
+  opacity: 1;
+}
