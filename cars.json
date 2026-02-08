@@ -1,0 +1,24 @@
+[
+  {
+    "id": "car_001",
+    "make": "Nissan",
+    "model": "Patrol",
+    "year": 2020,
+    "trim": "SE Titanium",
+    "mileageKm": 78000,
+    "spec": "GCC",
+    "priceAed": 158000,
+    "tag": "Featured"
+  },
+  {
+    "id": "car_002",
+    "make": "Toyota",
+    "model": "Land Cruiser",
+    "year": 2019,
+    "trim": "GXR",
+    "mileageKm": 95000,
+    "spec": "GCC",
+    "priceAed": 172000,
+    "tag": "Bank-ready"
+  }
+]
