@@ -1,23 +1,109 @@
-<section class="cars">
-  <div class="section-title">
-    <h2>Featured Cars</h2>
-    <p>Real listings. Real finance support. Real offers.</p>
-  </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CarFin Marketplace</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img class="brand-logo" src="./assets/logo.svg" alt="CarFin" />
+        <div class="brand-text">
+          <div class="brand-name">CarFin</div>
+          <div class="brand-sub">Auto Finance • Listings • Bank-ready Evaluation</div>
+        </div>
+      </div>
 
-  <div id="carsGrid" class="cars-grid"></div>
-</section>
+      <nav class="nav">
+        <a href="./index.html" class="nav-link active">Home</a>
+        <a href="./evaluation.html" class="nav-link">Evaluation</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="banks">
-  <div class="section-title">
-    <h2>Bank Partners</h2>
-    <p>We support bank-ready approvals with trusted UAE banks.</p>
-  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1>Finance-ready cars. Clean listings. Fast approvals.</h1>
+        <p class="muted">
+          Listings + banks + evaluation flow in one place. Built for UAE-style approvals.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="./evaluation.html">Start Evaluation</a>
+          <a class="btn btn-ghost" href="#featured">Browse Featured</a>
+        </div>
 
-  <div class="bank-row">
-    <img src="banks/dib.png" alt="DIB" />
-    <img src="banks/adcb.png" alt="ADCB" />
-    <img src="banks/enbd.png" alt="ENBD" />
-    <img src="banks/emiratesislamic.png" alt="Emirates Islamic" />
-    <img src="banks/ajmanbank.png" alt="Ajman Bank" />
-  </div>
-</section>
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kpi-title">Bank Partners</div>
+            <div class="kpi-value" id="kpiBanks">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-title">Cars Listed</div>
+            <div class="kpi-value" id="kpiCars">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-title">Avg. Approval Ready</div>
+            <div class="kpi-value">Same-day</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-title">Quick Search</div>
+        <div class="field">
+          <label>Keyword</label>
+          <input id="searchInput" class="input" placeholder="e.g. Patrol, Land Cruiser, BMW" />
+        </div>
+        <div class="field">
+          <label>Max Price (AED)</label>
+          <input id="maxPrice" class="input" type="number" placeholder="e.g. 200000" />
+        </div>
+        <button id="searchBtn" class="btn btn-primary btn-full">Search</button>
+        <p class="tiny muted">Tip: Works offline using JSON data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Cars -->
+  <section id="featured" class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Featured Cars</h2>
+        <p class="muted">Real listings. Real finance support. Real offers.</p>
+      </div>
+
+      <div id="carsGrid" class="cars-grid"></div>
+    </div>
+  </section>
+
+  <!-- Bank Partners -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-title">
+        <h2>Bank Partners</h2>
+        <p class="muted">We support bank-ready approvals with trusted UAE banks.</p>
+      </div>
+
+      <div id="banksRow" class="banks-row"></div>
+      <div class="note">
+        Note: Logos here are text badges by default. Replace with real images later.
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> CarFin Marketplace</span>
+      <span class="muted">Built for finance + evaluation workflows</span>
+    </div>
+  </footer>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
