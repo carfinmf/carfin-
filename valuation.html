@@ -2,152 +2,154 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Car Valuation Request</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CARFIN – Vehicle Valuation</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#000;color:#FFD700}
-.wrap{max-width:600px;margin:auto;padding:20px}
-h1{text-align:center}
-input,select,textarea{width:100%;padding:10px;margin:8px 0;border-radius:5px;border:none}
-button{background:gold;color:black;padding:14px;border:none;width:100%;font-size:18px;border-radius:8px;cursor:pointer}
-canvas{border:1px solid gold;width:100%;height:150px}
-label{font-size:14px}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#000;
+  color:#ffd200;
+}
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+h1{
+  text-align:center;
+  margin-bottom:25px;
+}
+label{
+  display:block;
+  margin-top:15px;
+  font-size:14px;
+}
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:6px;
+  border:none;
+  font-size:14px;
+}
+textarea{resize:vertical}
+button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  background:#ffd200;
+  color:#000;
+  border:none;
+  font-size:16px;
+  font-weight:bold;
+  border-radius:6px;
+  cursor:pointer;
+}
+small{
+  color:#aaa;
+  font-size:12px;
+}
+hr{
+  border:0;
+  border-top:1px solid #333;
+  margin:20px 0;
+}
+.footer{
+  text-align:center;
+  color:#777;
+  font-size:12px;
+  margin-top:30px;
+}
 </style>
 </head>
+
 <body>
-<label>Name</label>
-<input type="text" name="customer_name" required>
-
-<label>Phone</label>
-<input type="tel" name="phone" required>
-
-<label>Email (optional)</label>
-<input type="email" name="email">
-<div class="wrap">
+<div class="container">
 <h1>Vehicle Valuation</h1>
 
+<form action="https://formsubmit.co/info@carfin.ae" method="POST" enctype="multipart/form-data">
+
+<input type="hidden" name="_subject" value="New Vehicle Valuation Request">
+<input type="hidden" name="_captcha" value="false">
+
 <label>Name</label>
-<input id="name" placeholder="Your name">
+<input name="Name" required>
 
 <label>Phone</label>
-<input id="phone" placeholder="Your phone">
+<input name="Phone" required>
 
 <label>Email (optional)</label>
-<input id="email" placeholder="Your email">
+<input name="Email">
 
 <label>Car Brand</label>
-<input id="brand" placeholder="Toyota, Nissan...">
+<input name="Brand" placeholder="Toyota, Nissan, BMW" required>
 
 <label>Model</label>
-<input id="model" placeholder="Land Cruiser">
+<input name="Model" required>
 
 <label>Year</label>
-<input id="year" placeholder="2020">
+<input name="Year" required>
 
 <label>Mileage (km)</label>
-<input id="mileage" placeholder="100000">
+<input name="Mileage" required>
 
 <label>Condition</label>
-<select id="condition">
-<option>Excellent</option>
-<option>Good</option>
-<option>Average</option>
-<option>Poor</option>
+<select name="Condition">
+  <option>Excellent</option>
+  <option>Good</option>
+  <option>Average</option>
+  <option>Poor</option>
 </select>
 
 <label>Notes</label>
-<textarea id="notes" placeholder="Any accident, finance, issues..."></textarea>
-<label>Vehicle Photos</label>
-<input type="file" id="photos" multiple accept="image/*">
-<small style="color:#aaa;display:block;margin-top:6px;">
-After tapping “Send to WhatsApp”, please attach photos using the 📎 button in WhatsApp.
-</small>
-<h3 style="color:#f5d76e;margin-top:24px;">Required Photos</h3>
-<form
-  action="https://formsubmit.co/info@carfin.ae"
-  method="POST"
-  enctype="multipart/form-data"
-  onsubmit="sendWhatsAppSummary()"
->
+<textarea name="Notes" placeholder="Accident, finance, issues..."></textarea>
+
+<hr>
+
+<h3>Required Photos</h3>
+
 <label>Front View</label>
-<input type="file" id="photo_front" accept="image/*" capture="environment">
+<input type="file" name="Front View" accept="image/*" required>
 
 <label>Rear View</label>
-<input type="file" id="photo_rear" accept="image/*" capture="environment">
+<input type="file" name="Rear View" accept="image/*" required>
 
 <label>Left Side</label>
-<input type="file" id="photo_left" accept="image/*" capture="environment">
+<input type="file" name="Left Side" accept="image/*" required>
 
 <label>Right Side</label>
-<input type="file" id="photo_right" accept="image/*" capture="environment">
+<input type="file" name="Right Side" accept="image/*" required>
 
-<label>Odometer (KM)</label>
-<input type="file" id="photo_odometer" accept="image/*" capture="environment">
+<label>Odometer</label>
+<input type="file" name="Odometer" accept="image/*" required>
 
 <label>VIN / Chassis Plate</label>
-<input type="file" id="photo_vin" accept="image/*" capture="environment">
+<input type="file" name="VIN Plate" accept="image/*">
 
 <label>Engine Bay</label>
-<input type="file" id="photo_engine" accept="image/*" capture="environment">
+<input type="file" name="Engine" accept="image/*">
 
 <label>Interior</label>
-<input type="file" id="photo_interior" accept="image/*" capture="environment">
+<input type="file" name="Interior" accept="image/*">
 
-<label>Car Document (Mulkiya / Export / etc.)</label>
-<input type="file" id="photo_doc" accept="image/*,.pdf">
-<br><br>
-<button onclick="sendWhatsApp()">Send to WhatsApp</button>
+<label>Car Documents</label>
+<input type="file" name="Documents" accept="image/*,application/pdf">
+
+<hr>
+
+<small>
+Photos will be sent to CARFIN email for valuation processing.
+</small>
+
+<button type="submit">Submit Valuation</button>
+
+</form>
+
+<div class="footer">
+© CARFIN – Vehicle Valuation
 </div>
-
-<script>
-let canvas = document.getElementById("sign");
-let ctx = canvas.getContext("2d");
-let drawing=false;
-
-canvas.addEventListener("mousedown",()=>drawing=true);
-canvas.addEventListener("mouseup",()=>drawing=false);
-canvas.addEventListener("mousemove",draw);
-
-canvas.addEventListener("touchstart",()=>drawing=true);
-canvas.addEventListener("touchend",()=>drawing=false);
-canvas.addEventListener("touchmove",drawTouch);
-
-function draw(e){
-if(!drawing)return;
-ctx.lineWidth=2;
-ctx.lineTo(e.offsetX,e.offsetY);
-ctx.stroke();
-}
-
-function drawTouch(e){
-let rect = canvas.getBoundingClientRect();
-let touch = e.touches[0];
-ctx.lineTo(touch.clientX-rect.left,touch.clientY-rect.top);
-ctx.stroke();
-}
-
-function clearSign(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-
-function sendWhatsApp(){
-let msg =
-"🚗 *Car Valuation Request* \n\n"+
-"Name: "+name.value+"\n"+
-"Phone: "+phone.value+"\n"+
-"Email: "+email.value+"\n"+
-"Brand: "+brand.value+"\n"+
-"Model: "+model.value+"\n"+
-"Year: "+year.value+"\n"+
-"Mileage: "+mileage.value+"\n"+
-"Condition: "+condition.value+"\n"+
-"Notes: "+notes.value+"\n\n"+
-"📸 Please attach car photos";
-
-let url="https://wa.me/971544417665?text="+encodeURIComponent(msg);
-window.open(url,"_blank");
-}
-</script>
-
+</div>
 </body>
 </html>
