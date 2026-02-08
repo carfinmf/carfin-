@@ -56,7 +56,12 @@ label{font-size:14px}
 After tapping “Send to WhatsApp”, please attach photos using the 📎 button in WhatsApp.
 </small>
 <h3 style="color:#f5d76e;margin-top:24px;">Required Photos</h3>
-
+<form
+  action="https://formsubmit.co/info@carfin.ae"
+  method="POST"
+  enctype="multipart/form-data"
+  onsubmit="sendWhatsAppSummary()"
+>
 <label>Front View</label>
 <input type="file" id="photo_front" accept="image/*" capture="environment">
 
