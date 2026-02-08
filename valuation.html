@@ -1,157 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CARFIN – Vehicle Valuation</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#000;
-  color:#ffd200;
-}
-.container{
-  max-width:520px;
-  margin:auto;
-  padding:20px;
-}
-h1{
-  text-align:center;
-  margin-bottom:25px;
-}
-label{
-  display:block;
-  margin-top:15px;
-  font-size:14px;
-}
-input, select, textarea{
-  width:100%;
-  padding:10px;
-  margin-top:6px;
-  border-radius:6px;
-  border:none;
-  font-size:14px;
-}
-textarea{resize:vertical}
-button{
-  width:100%;
-  margin-top:18px;
-  padding:14px;
-  background:#ffd200;
-  color:#000;
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  border-radius:6px;
-  cursor:pointer;
-}
-small{
-  color:#aaa;
-  font-size:12px;
-}
-hr{
-  border:0;
-  border-top:1px solid #333;
-  margin:20px 0;
-}
-.footer{
-  text-align:center;
-  color:#777;
-  font-size:12px;
-  margin-top:30px;
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CarFin Evaluation</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
-
 <body>
-<div class="container">
-<h1>Vehicle Valuation</h1>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img class="brand-logo" src="./assets/logo.svg" alt="CarFin" />
+        <div class="brand-text">
+          <div class="brand-name">CarFin</div>
+          <div class="brand-sub">Evaluation • Bank-ready Certificate</div>
+        </div>
+      </div>
 
-<input type="hidden" name="_subject" value="New Vehicle Valuation Request">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_captcha" value="false">
+      <nav class="nav">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./evaluation.html" class="nav-link active">Evaluation</a>
+      </nav>
+    </div>
+  </header>
 
-<input type="hidden" name="_subject" value="New Vehicle Valuation Request">
-<input type="hidden" name="_captcha" value="false">
+  <section class="section">
+    <div class="container">
+      <div class="section-title">
+        <h2>Vehicle Evaluation</h2>
+        <p class="muted">Fill details → generate evaluation JSON → downloadable receipt-style summary.</p>
+      </div>
 
-<label>Name</label>
-<input name="Name" required>
+      <div class="grid-2">
+        <!-- Form -->
+        <div class="card">
+          <div class="card-title">Evaluation Form</div>
 
-<label>Phone</label>
-<input name="Phone" required>
+          <div class="grid-2">
+            <div class="field">
+              <label>Customer Name</label>
+              <input class="input" id="custName" placeholder="e.g. Ahmed" />
+            </div>
+            <div class="field">
+              <label>Mobile</label>
+              <input class="input" id="custMobile" placeholder="+971..." />
+            </div>
+          </div>
 
-<label>Email (optional)</label>
-<input name="Email">
+          <div class="grid-3">
+            <div class="field">
+              <label>Make</label>
+              <input class="input" id="make" placeholder="Toyota" />
+            </div>
+            <div class="field">
+              <label>Model</label>
+              <input class="input" id="model" placeholder="Land Cruiser" />
+            </div>
+            <div class="field">
+              <label>Year</label>
+              <input class="input" id="yearCar" type="number" placeholder="2020" />
+            </div>
+          </div>
 
-<label>Car Brand</label>
-<input name="Brand" placeholder="Toyota, Nissan, BMW" required>
+          <div class="grid-3">
+            <div class="field">
+              <label>Trim</label>
+              <input class="input" id="trim" placeholder="VXR / SXT / etc" />
+            </div>
+            <div class="field">
+              <label>Mileage (km)</label>
+              <input class="input" id="mileage" type="number" placeholder="85000" />
+            </div>
+            <div class="field">
+              <label>Spec</label>
+              <select class="input" id="spec">
+                <option value="GCC">GCC</option>
+                <option value="Non-GCC">Non-GCC</option>
+              </select>
+            </div>
+          </div>
 
-<label>Model</label>
-<input name="Model" required>
+          <div class="grid-2">
+            <div class="field">
+              <label>Bank</label>
+              <select class="input" id="bank"></select>
+            </div>
+            <div class="field">
+              <label>Evaluation Value (AED)</label>
+              <input class="input" id="value" type="number" placeholder="150000" />
+            </div>
+          </div>
 
-<label>Year</label>
-<input name="Year" required>
+          <div class="grid-2">
+            <div class="field">
+              <label>Chassis No.</label>
+              <input class="input" id="chassis" placeholder="e.g. JTE..." />
+            </div>
+            <div class="field">
+              <label>Plate No.</label>
+              <input class="input" id="plate" placeholder="e.g. Dubai A 12345" />
+            </div>
+          </div>
 
-<label>Mileage (km)</label>
-<input name="Mileage" required>
+          <div class="field">
+            <label>Notes</label>
+            <textarea class="input" id="notes" rows="3" placeholder="Inspection notes, accident status, paint, tires..."></textarea>
+          </div>
 
-<label>Condition</label>
-<select name="Condition">
-  <option>Excellent</option>
-  <option>Good</option>
-  <option>Average</option>
-  <option>Poor</option>
-</select>
+          <div class="actions">
+            <button class="btn btn-primary" id="generateBtn">Generate Evaluation</button>
+            <button class="btn btn-ghost" id="clearBtn">Clear</button>
+          </div>
 
-<label>Notes</label>
-<textarea name="Notes" placeholder="Accident, finance, issues..."></textarea>
+          <p class="tiny muted">
+            This generates a JSON record (like your bank valuation backend would).
+          </p>
+        </div>
 
-<hr>
+        <!-- Output -->
+        <div class="card">
+          <div class="card-title">Output</div>
 
-<h3>Required Photos</h3>
+          <div class="pill-row">
+            <span class="pill pill-gold">Bank-ready</span>
+            <span class="pill pill-green">Verification ID</span>
+            <span class="pill pill-dark">UAE format</span>
+          </div>
 
-<label>Front View</label>
-<input type="file" name="Front View" accept="image/*" required>
+          <div class="output">
+            <pre id="jsonOut" class="codeblock">{}</pre>
+          </div>
 
-<label>Rear View</label>
-<input type="file" name="Rear View" accept="image/*" required>
+          <div class="actions">
+            <button class="btn btn-primary" id="downloadBtn">Download JSON</button>
+            <button class="btn btn-ghost" id="copyBtn">Copy JSON</button>
+          </div>
 
-<label>Left Side</label>
-<input type="file" name="Left Side" accept="image/*" required>
+          <hr class="hr" />
 
-<label>Right Side</label>
-<input type="file" name="Right Side" accept="image/*" required>
+          <div class="card-title">Receipt Preview</div>
+          <div id="receipt" class="receipt muted">
+            Generate an evaluation to preview here.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<label>Odometer</label>
-<input type="file" name="Odometer" accept="image/*" required>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> CarFin Marketplace</span>
+      <span class="muted">Evaluation module</span>
+    </div>
+  </footer>
 
-<label>VIN / Chassis Plate</label>
-<input type="file" name="VIN Plate" accept="image/*">
-
-<label>Engine Bay</label>
-<input type="file" name="Engine" accept="image/*">
-
-<label>Interior</label>
-<input type="file" name="Interior" accept="image/*">
-
-<label>Car Documents</label>
-<input type="file" name="Documents" accept="image/*,application/pdf">
-
-<hr>
-
-<small>
-Photos will be sent to CARFIN email for valuation processing.
-</small>
-
-<button type="submit">Submit Valuation</button>
-
-</form>
-
-<div class="footer">
-© CARFIN – Vehicle Valuation
-</div>
-</div>
+  <script src="./evaluation.js" defer></script>
 </body>
 </html>
