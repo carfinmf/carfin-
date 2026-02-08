@@ -1,124 +1,230 @@
-// ✅ Set your WhatsApp number here (no +, no spaces)
-const YOUR_WHATSAPP = "971544417665";
+import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
-const form = document.getElementById("valuationForm");
-const photosInput = document.getElementById("photos");
-const preview = document.getElementById("preview");
+const PHOTO_FIELDS = [
+  { key: "front", label: "Front" },
+  { key: "back", label: "Back" },
+  { key: "driver_side", label: "Driver Side" },
+  { key: "passenger_side", label: "Passenger Side" },
+  { key: "interior", label: "Interior" },
+  { key: "mileage", label: "Mileage Photo" },
+  { key: "engine_bay", label: "Engine Bay" },
+  { key: "documents", label: "Car Documents / Passing" },
+];
 
-photosInput?.addEventListener("change", () => {
-  preview.innerHTML = "";
-  const files = Array.from(photosInput.files || []);
-  files.slice(0, 24).forEach(file => {
-    const img = document.createElement("img");
-    img.alt = file.name;
-    img.src = URL.createObjectURL(file);
-    preview.appendChild(img);
+export default function ValuationPage() {
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    brand: "",
+    model: "",
+    year: "",
+    mileage: "",
+    condition: "Excellent",
+    notes: "",
   });
-});
 
-// Signature pad (simple)
-const canvas = document.getElementById("signaturePad");
-const clearBtn = document.getElementById("clearSig");
-const undoBtn = document.getElementById("undoSig");
+  const [files, setFiles] = useState(() =>
+    Object.fromEntries(PHOTO_FIELDS.map(f => [f.key, null]))
+  );
 
-let ctx, drawing = false;
-let strokes = [];
-let currentStroke = [];
+  const [previews, setPreviews] = useState(() =>
+    Object.fromEntries(PHOTO_FIELDS.map(f => [f.key, null]))
+  );
 
-function resizeCanvasForDPI(){
-  if(!canvas) return;
-  const ratio = window.devicePixelRatio || 1;
-  const cssWidth = canvas.clientWidth;
-  const cssHeight = Math.round(cssWidth * (220/900));
-  canvas.style.height = cssHeight + "px";
-  canvas.width = Math.floor(cssWidth * ratio);
-  canvas.height = Math.floor(cssHeight * ratio);
-
-  ctx = canvas.getContext("2d");
-  ctx.setTransform(ratio,0,0,ratio,0,0);
-  ctx.lineWidth = 3;
-  ctx.lineCap = "round";
-  ctx.strokeStyle = "#d4af37";
-  redraw();
-}
-
-function getPos(e){
-  const rect = canvas.getBoundingClientRect();
-  const t = e.touches && e.touches[0];
-  const x = (t ? t.clientX : e.clientX) - rect.left;
-  const y = (t ? t.clientY : e.clientY) - rect.top;
-  return {x,y};
-}
-function start(e){ drawing=true; currentStroke=[]; currentStroke.push(getPos(e)); e.preventDefault?.(); }
-function move(e){
-  if(!drawing) return;
-  e.preventDefault?.();
-  const p = getPos(e);
-  const last = currentStroke[currentStroke.length-1];
-  currentStroke.push(p);
-  ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
-}
-function end(){ if(!drawing) return; drawing=false; if(currentStroke.length>1) strokes.push(currentStroke); currentStroke=[]; }
-
-function redraw(){
-  if(!ctx) return;
-  ctx.clearRect(0,0,canvas.clientWidth,canvas.clientHeight);
-  strokes.forEach(s=>{
-    for(let i=1;i<s.length;i++){
-      const a=s[i-1], b=s[i];
-      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-    }
-  });
-}
-
-clearBtn?.addEventListener("click", ()=>{ strokes=[]; redraw(); });
-undoBtn?.addEventListener("click", ()=>{ strokes.pop(); redraw(); });
-
-canvas?.addEventListener("mousedown", start);
-canvas?.addEventListener("mousemove", move);
-window.addEventListener("mouseup", end);
-
-canvas?.addEventListener("touchstart", start, {passive:false});
-canvas?.addEventListener("touchmove", move, {passive:false});
-canvas?.addEventListener("touchend", end);
-
-window.addEventListener("resize", resizeCanvasForDPI);
-resizeCanvasForDPI();
-
-form?.addEventListener("submit", (e)=>{
-  e.preventDefault();
-
-  if(strokes.length===0){
-    alert("Please add signature before sending.");
-    return;
+  function onChange(e) {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  const fd = new FormData(form);
+  function onFileChange(key, file) {
+    setFiles(prev => ({ ...prev, [key]: file || null }));
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviews(prev => ({ ...prev, [key]: url }));
+    } else {
+      setPreviews(prev => ({ ...prev, [key]: null }));
+    }
+  }
 
-  const msg =
-`*CARFIN — Vehicle Evaluation Request*
-*Customer*
-Name: ${fd.get("name")}
-Phone: ${fd.get("phone")}
-Email: ${fd.get("email") || "-"}
-Location: ${fd.get("location")}
+  async function uploadOne(file, requestId, key) {
+    const safeName = file.name.replace(/\s+/g, "_");
+    const path = `${requestId}/${key}-${Date.now()}-${safeName}`;
 
-*Vehicle*
-Make/Model: ${fd.get("make")} ${fd.get("model")}
-Year: ${fd.get("year")}
-Trim: ${fd.get("trim") || "-"}
-VIN: ${fd.get("vin") || "-"}
-Mileage: ${fd.get("mileage")} km
-Condition: ${fd.get("condition")}
-Expected Price: ${fd.get("price") || "-"} AED
+    const { error } = await supabase.storage
+      .from("valuation-photos")
+      .upload(path, file, { upsert: false });
 
-Notes: ${fd.get("notes") || "-"}
+    if (error) throw error;
 
-*Photos selected:* ${(photosInput.files && photosInput.files.length) ? photosInput.files.length : 0}
-*Signature:* Added
+    const { data } = supabase.storage
+      .from("valuation-photos")
+      .getPublicUrl(path);
 
-(Please attach the selected photos in WhatsApp and send.)`;
+    return { key, url: data.publicUrl };
+  }
 
-  const url = `https://wa.me/${YOUR_WHATSAPP}?text=${encodeURIComponent(msg)}`;
-  window.open(url, "_blank");
-});
+  async function submit(e) {
+    e.preventDefault();
+    setMsg("");
+    setLoading(true);
+
+    try {
+      // 1) Create request row first (no photos yet)
+      const { data: row, error: insertErr } = await supabase
+        .from("valuation_requests")
+        .insert({
+          name: form.name.trim(),
+          phone: form.phone.trim(),
+          email: form.email.trim() || null,
+          brand: form.brand.trim(),
+          model: form.model.trim(),
+          year: form.year.trim(),
+          mileage: form.mileage.trim(),
+          condition: form.condition,
+          notes: form.notes.trim(),
+          status: "new",
+          photos: [],
+        })
+        .select()
+        .single();
+
+      if (insertErr) throw insertErr;
+
+      // 2) Upload files
+      const requestId = row.id;
+      const uploads = [];
+
+      for (const f of PHOTO_FIELDS) {
+        const file = files[f.key];
+        if (file) uploads.push(uploadOne(file, requestId, f.key));
+      }
+
+      const photos = await Promise.all(uploads);
+
+      // 3) Update row with photo URLs
+      const { error: updErr } = await supabase
+        .from("valuation_requests")
+        .update({ photos })
+        .eq("id", requestId);
+
+      if (updErr) throw updErr;
+
+      setMsg("✅ Submitted! CARFIN team will contact you soon.");
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        brand: "",
+        model: "",
+        year: "",
+        mileage: "",
+        condition: "Excellent",
+        notes: "",
+      });
+      setFiles(Object.fromEntries(PHOTO_FIELDS.map(f => [f.key, null])));
+      setPreviews(Object.fromEntries(PHOTO_FIELDS.map(f => [f.key, null])));
+    } catch (err) {
+      setMsg(`❌ Error: ${err.message || "Something went wrong"}`);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div style={{ maxWidth: 720, margin: "40px auto", padding: 16, fontFamily: "Arial" }}>
+      <h1>Vehicle Valuation</h1>
+      <p>Upload vehicle details and photos for evaluation.</p>
+
+      <form onSubmit={submit}>
+        <label>Name</label>
+        <input name="name" value={form.name} onChange={onChange} required style={inp} />
+
+        <label>Phone</label>
+        <input name="phone" value={form.phone} onChange={onChange} required style={inp} />
+
+        <label>Email (optional)</label>
+        <input name="email" value={form.email} onChange={onChange} style={inp} />
+
+        <label>Car Brand</label>
+        <input name="brand" value={form.brand} onChange={onChange} style={inp} />
+
+        <label>Model</label>
+        <input name="model" value={form.model} onChange={onChange} style={inp} />
+
+        <label>Year</label>
+        <input name="year" value={form.year} onChange={onChange} style={inp} />
+
+        <label>Mileage (km)</label>
+        <input name="mileage" value={form.mileage} onChange={onChange} style={inp} />
+
+        <label>Condition</label>
+        <select name="condition" value={form.condition} onChange={onChange} style={inp}>
+          <option>Excellent</option>
+          <option>Good</option>
+          <option>Fair</option>
+          <option>Poor</option>
+        </select>
+
+        <label>Notes</label>
+        <textarea name="notes" value={form.notes} onChange={onChange} style={{ ...inp, height: 90 }} />
+
+        <h3 style={{ marginTop: 24 }}>Photos</h3>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+          {PHOTO_FIELDS.map((f) => (
+            <div key={f.key} style={card}>
+              <div style={{ fontWeight: 700 }}>{f.label}</div>
+
+              {previews[f.key] ? (
+                <img src={previews[f.key]} alt={f.label} style={{ width: "100%", marginTop: 8, borderRadius: 8 }} />
+              ) : (
+                <div style={{ marginTop: 8, opacity: 0.7 }}>No photo selected</div>
+              )}
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => onFileChange(f.key, e.target.files?.[0] || null)}
+                style={{ marginTop: 10 }}
+              />
+            </div>
+          ))}
+        </div>
+
+        <button disabled={loading} style={btn}>
+          {loading ? "Submitting..." : "Submit Valuation"}
+        </button>
+      </form>
+
+      {msg && <p style={{ marginTop: 16 }}>{msg}</p>}
+    </div>
+  );
+}
+
+const inp = {
+  width: "100%",
+  padding: 12,
+  margin: "6px 0 14px",
+  borderRadius: 10,
+  border: "1px solid #ccc",
+};
+
+const btn = {
+  marginTop: 18,
+  padding: "12px 18px",
+  borderRadius: 10,
+  border: "none",
+  background: "black",
+  color: "white",
+  fontWeight: 700,
+  cursor: "pointer",
+};
+
+const card = {
+  border: "1px solid #ddd",
+  borderRadius: 12,
+  padding: 12,
+};
