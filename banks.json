@@ -1,7 +1,27 @@
 [
-  { "code": "DIB", "name": "Dubai Islamic Bank", "logo": "./assets/banks/dib.png" },
-  { "code": "ADCB", "name": "Abu Dhabi Commercial Bank", "logo": "./assets/banks/adcb.png" },
-  { "code": "ENBD", "name": "Emirates NBD", "logo": "./assets/banks/enbd.png" },
-  { "code": "EI", "name": "Emirates Islamic", "logo": "./assets/banks/ei.png" },
-  { "code": "AJB", "name": "Ajman Bank", "logo": "./assets/banks/ajman.png" }
+  {
+    "code": "DIB",
+    "name": "Dubai Islamic Bank",
+    "logo": "./assets/banks/dib.png"
+  },
+  {
+    "code": "ADIB",
+    "name": "Abu Dhabi Islamic Bank",
+    "logo": "./assets/banks/adib.png"
+  },
+  {
+    "code": "ADCB",
+    "name": "Abu Dhabi Commercial Bank",
+    "logo": "./assets/banks/adcb.png"
+  },
+  {
+    "code": "ENBD",
+    "name": "Emirates NBD",
+    "logo": "./assets/banks/enbd.png"
+  },
+  {
+    "code": "EI",
+    "name": "Emirates Islamic",
+    "logo": "./assets/banks/eib.png"
+  }
 ]
