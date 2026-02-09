@@ -1,16 +1,31 @@
 grid.innerHTML = cars.map(car => `
   <div class="car-card">
-    <div class="car-img" style="background-image:url('${car.image}')">
+    <div class="car-img">
       <span class="badge">${car.tag}</span>
     </div>
+
     <div class="car-body">
-      <h3>${car.title}</h3>
+      <h3>${car.make} ${car.model} ${car.year}</h3>
+
       <div class="car-meta">
-        <span>${car.mileage}</span>
+        <span>${car.trim}</span>
         <span>${car.spec}</span>
-        <span>${car.location}</span>
+        <span>${car.mileageKm.toLocaleString()} km</span>
       </div>
-      <div class="car-price">${car.price}</div>
+
+      <div class="car-price">
+        AED ${car.priceAed.toLocaleString()}
+      </div>
+
+      <div class="car-actions">
+        <a class="btn primary" href="valuation.html">Apply Finance</a>
+        <a class="btn outline" target="_blank"
+           href="https://wa.me/971544417665?text=${encodeURIComponent(
+             `Hi CarFin, I want this car: ${car.make} ${car.model} ${car.year}`
+           )}">
+           WhatsApp
+        </a>
+      </div>
     </div>
   </div>
 `).join('');
