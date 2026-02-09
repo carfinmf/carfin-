@@ -1,31 +1,29 @@
-grid.innerHTML = cars.map(car => `
-  <div class="car-card">
-    <div class="car-img">
-      <span class="badge">${car.tag}</span>
-    </div>
-
-    <div class="car-body">
-      <h3>${car.make} ${car.model} ${car.year}</h3>
-
-      <div class="car-meta">
-        <span>${car.trim}</span>
-        <span>${car.spec}</span>
-        <span>${car.mileageKm.toLocaleString()} km</span>
-      </div>
-
-      <div class="car-price">
-        AED ${car.priceAed.toLocaleString()}
-      </div>
-
-      <div class="car-actions">
-        <a class="btn primary" href="valuation.html">Apply Finance</a>
-        <a class="btn outline" target="_blank"
-           href="https://wa.me/971544417665?text=${encodeURIComponent(
-             `Hi CarFin, I want this car: ${car.make} ${car.model} ${car.year}`
-           )}">
-           WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-`).join('');
+[
+  {
+    "image": "https://images.unsplash.com/photo-1619767886558-efdc259cde1a",
+    "tag": "Featured",
+    "title": "Nissan Patrol 2020 SE Titanium",
+    "mileage": "78,000 km",
+    "spec": "GCC",
+    "location": "Dubai",
+    "price": "AED 158,000"
+  },
+  {
+    "image": "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c4",
+    "tag": "Bank-ready",
+    "title": "Toyota Land Cruiser 2019 GXR",
+    "mileage": "95,000 km",
+    "spec": "GCC",
+    "location": "Sharjah",
+    "price": "AED 172,000"
+  },
+  {
+    "image": "https://images.unsplash.com/photo-1617531653332-bd46c24f2068",
+    "tag": "Premium",
+    "title": "BMW X5 2021 xDrive40i",
+    "mileage": "61,000 km",
+    "spec": "GCC",
+    "location": "Dubai",
+    "price": "AED 210,000"
+  }
+]
