@@ -22,3 +22,19 @@
     "tag": "Bank-ready"
   }
 ]
+grid.innerHTML = cars.map(car => `
+  <div class="car-card">
+    <div class="car-img" style="background-image:url('${car.image}')">
+      <span class="badge">${car.tag}</span>
+    </div>
+    <div class="car-body">
+      <h3>${car.title}</h3>
+      <div class="car-meta">
+        <span>${car.mileage}</span>
+        <span>${car.spec}</span>
+        <span>${car.location}</span>
+      </div>
+      <div class="car-price">${car.price}</div>
+    </div>
+  </div>
+`).join('');
