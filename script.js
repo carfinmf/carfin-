@@ -7,7 +7,7 @@ async function loadBanks() {
 
   row.innerHTML = banks.map(bank => `
     <div class="bank-item" title="${bank.name}">
-      <img src="${bank.logo}" alt="${bank.name}" loading="lazy" />
+      <img src="${bank.logo}" alt="${bank.name}" loading="lazy">
     </div>
   `).join('');
 }
@@ -16,4 +16,3 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCars();
   loadBanks();
 });
-
