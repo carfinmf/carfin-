@@ -1,4 +1,6 @@
 :root{
+  --accent: #ff3b3b;
+  --gradient-hero: linear-gradient(135deg, #0b0f14 0%, #101826 40%, #0f1620 100%);
   --bg: #0b0f14;
   --bg2:#0f1620;
   --card:#0c0c0c;
@@ -344,6 +346,7 @@ label{ display:block; font-size: 12px; color: var(--muted); margin-bottom: 6px; 
   .grid-2{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: 1fr; }
 }
+
 
 
 
