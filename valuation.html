@@ -1,160 +1,83 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CarFin Evaluation</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Carfin | Evaluation</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
 </head>
 <body>
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand">
-        <img class="brand-logo" src="./assets/logo.svg" alt="CarFin" />
-        <div class="brand-text">
-          <div class="brand-name">CarFin</div>
-          <div class="brand-sub">Evaluation • Bank-ready Certificate</div>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="./index.html" class="nav-link">Home</a>
-       <a href="valuation.html">Get Valuation</a>
-
-      </nav>
-    </div>
-  </header>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-title">
-        <h2>Vehicle Evaluation</h2>
-        <p class="muted">Fill details → generate evaluation JSON → downloadable receipt-style summary.</p>
-      </div>
-
-      <div class="grid-2">
-        <!-- Form -->
-        <div class="card">
-          <div class="card-title">Evaluation Form</div>
-
-          <div class="grid-2">
-            <div class="field">
-              <label>Customer Name</label>
-              <input class="input" id="custName" placeholder="e.g. Ahmed" />
-            </div>
-            <div class="field">
-              <label>Mobile</label>
-              <input class="input" id="custMobile" placeholder="+971..." />
-            </div>
-          </div>
-
-          <div class="grid-3">
-            <div class="field">
-              <label>Make</label>
-              <input class="input" id="make" placeholder="Toyota" />
-            </div>
-            <div class="field">
-              <label>Model</label>
-              <input class="input" id="model" placeholder="Land Cruiser" />
-            </div>
-            <div class="field">
-              <label>Year</label>
-              <input class="input" id="yearCar" type="number" placeholder="2020" />
-            </div>
-          </div>
-
-          <div class="grid-3">
-            <div class="field">
-              <label>Trim</label>
-              <input class="input" id="trim" placeholder="VXR / SXT / etc" />
-            </div>
-            <div class="field">
-              <label>Mileage (km)</label>
-              <input class="input" id="mileage" type="number" placeholder="85000" />
-            </div>
-            <div class="field">
-              <label>Spec</label>
-              <select class="input" id="spec">
-                <option value="GCC">GCC</option>
-                <option value="Non-GCC">Non-GCC</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="field">
-              <label>Bank</label>
-              <select class="input" id="bank"></select>
-            </div>
-            <div class="field">
-              <label>Evaluation Value (AED)</label>
-              <input class="input" id="value" type="number" placeholder="150000" />
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="field">
-              <label>Chassis No.</label>
-              <input class="input" id="chassis" placeholder="e.g. JTE..." />
-            </div>
-            <div class="field">
-              <label>Plate No.</label>
-              <input class="input" id="plate" placeholder="e.g. Dubai A 12345" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Notes</label>
-            <textarea class="input" id="notes" rows="3" placeholder="Inspection notes, accident status, paint, tires..."></textarea>
-          </div>
-
-          <div class="actions">
-            <button class="btn btn-primary" id="generateBtn">Generate Evaluation</button>
-            <button class="btn btn-ghost" id="clearBtn">Clear</button>
-          </div>
-
-          <p class="tiny muted">
-            This generates a JSON record (like your bank valuation backend would).
-          </p>
-        </div>
-
-        <!-- Output -->
-        <div class="card">
-          <div class="card-title">Output</div>
-
-          <div class="pill-row">
-            <span class="pill pill-gold">Bank-ready</span>
-            <span class="pill pill-green">Verification ID</span>
-            <span class="pill pill-dark">UAE format</span>
-          </div>
-
-          <div class="output">
-            <pre id="jsonOut" class="codeblock">{}</pre>
-          </div>
-
-          <div class="actions">
-            <button class="btn btn-primary" id="downloadBtn">Download JSON</button>
-            <button class="btn btn-ghost" id="copyBtn">Copy JSON</button>
-          </div>
-
-          <hr class="hr" />
-
-          <div class="card-title">Receipt Preview</div>
-          <div id="receipt" class="receipt muted">
-            Generate an evaluation to preview here.
-          </div>
-        </div>
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><img src="../assets/img/logo.png" alt="Carfin"/></div>
+      <div class="nav-links">
+        <a class="pill" href="../index.html">Home</a>
+        <a class="pill" href="./insurance.html">Insurance</a>
+        <a class="pill" href="./finance.html">Finance</a>
+        <button id="langBtn" class="pill lang-btn">AR</button>
       </div>
     </div>
-  </section>
+  </div>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> CarFin Marketplace</span>
-      <span class="muted">Evaluation module</span>
+  <div class="container">
+    <div class="card">
+      <h2 style="margin:0;font-weight:950">Vehicle Evaluation (No Login)</h2>
+      <p style="margin:8px 0 0;color:var(--muted);font-weight:650">
+        Photos are not allowed for evaluation in this version.
+      </p>
+
+      <form class="form" id="evalForm">
+        <div class="field">
+          <label>Plate Number</label>
+          <input required placeholder="e.g. Dubai A 12345"/>
+        </div>
+        <div class="field">
+          <label>Make</label>
+          <input required placeholder="e.g. Toyota"/>
+        </div>
+        <div class="field">
+          <label>Model</label>
+          <input required placeholder="e.g. Land Cruiser"/>
+        </div>
+        <div class="field">
+          <label>Year</label>
+          <input required type="number" min="1990" max="2026" placeholder="2020"/>
+        </div>
+        <div class="field">
+          <label>Mileage (km)</label>
+          <input required type="number" min="0" placeholder="85000"/>
+        </div>
+        <div class="field">
+          <label>Specs</label>
+          <select required>
+            <option value="">Select</option>
+            <option>GCC</option>
+            <option>Non-GCC</option>
+          </select>
+        </div>
+
+        <div class="field" style="grid-column:1/-1">
+          <label>Notes (optional)</label>
+          <textarea placeholder="Any details…"></textarea>
+          <div class="help">Submit will show confirmation only. It will NOT go to admin panel.</div>
+        </div>
+
+        <div style="grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn btn-primary" type="submit">Submit Evaluation</button>
+          <a class="btn" href="../index.html">Back</a>
+        </div>
+      </form>
     </div>
-  </footer>
+  </div>
 
-  <script src="./evaluation.js" defer></script>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.getElementById("evalForm").addEventListener("submit",(e)=>{
+      e.preventDefault();
+      // IMPORTANT: do NOT save to admin.
+      window.location.href = "./evaluation-success.html";
+    });
+  </script>
 </body>
 </html>
